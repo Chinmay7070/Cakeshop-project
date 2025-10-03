@@ -22,4 +22,16 @@ public class IcakeServiceImpl implements ICakeService {
 	public Cake getCakeById(Long id) {
 		return cakerepo.findById(id).orElse(null);
 	}
+
+	public void saveCake(Cake cake) {
+		
+		cakerepo.save(cake);
+	}
+
+	@Override
+	public void deleteCake(Long id) {
+		cakerepo.deleteById(id);
+		
+	}
+
 }

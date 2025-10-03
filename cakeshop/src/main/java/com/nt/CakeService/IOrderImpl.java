@@ -1,6 +1,8 @@
 package com.nt.CakeService;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,12 @@ public class IOrderImpl implements IOderService
          orepo.save(order);
 		
 	}
+
+	public List<Order> getAllOrders() {
+		  return orepo.findAll();
+	}
+	
+		
+	
 
 }
