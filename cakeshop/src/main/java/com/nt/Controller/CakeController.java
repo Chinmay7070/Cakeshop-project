@@ -12,15 +12,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nt.CakeService.CartDetail;
 import com.nt.CakeService.EmailService;
 import com.nt.CakeService.ICakeService;
+import com.nt.CakeService.ICartService;
 import com.nt.CakeService.IOderService;
 import com.nt.CakeService.PdfService;
 import com.nt.model.Cake;
+import com.nt.model.Cart;
 import com.nt.model.Order;
 
 @Controller
 public class CakeController {
+	
+	@Autowired
+	private ICartService caservice;
 
 	@Autowired
 	private ICakeService cservice;
@@ -44,7 +50,7 @@ public class CakeController {
 	
 	@PostMapping("/buy")
     public String buyCake(@ModelAttribute Order order, Model model) {
-        // Order मधून cakeId वापरून Cake मिळवा
+    
         Cake cake = cservice.getCakeById(order.getCakeId());
         if (cake == null) {
             model.addAttribute("error", "Cake not found!");
@@ -195,6 +201,85 @@ public class CakeController {
 	        }
 	        return "redirect:/admin";
 	    }
-	
+	    
+	    @PostMapping("/add-to-cart")
+	    public String addToCart(@RequestParam Long cakeId,Model model)
+	    {
+	    	Cart cart = new Cart();
+	    	cart.setCakeId(cakeId);
+	    	cart.setUserId(1L);
+	    	cart.setQuantity(1);
+	    	caservice.addToCart(cart);
+	    	model.addAttribute("message","cake added to cart!");
+	    	return "redirect:/cakes";
+	    	
+	    }
+	    @GetMapping("/cart")
+	    public String getCartPage(Model model) {
+	        List cartDetails = caservice.getAllCartItemsWithDetails();
+	        double totalPrice = 0;
+	        for (int i = 0; i < cartDetails.size(); i++) {
+	            CartDetail cartDetail = (CartDetail) cartDetails.get(i);
+	            totalPrice = totalPrice + (cartDetail.getCakePrice() * cartDetail.getQuantity());
+	        }
+	        model.addAttribute("cartItems", cartDetails);
+	        model.addAttribute("totalPrice", totalPrice);
+	        return "cart";
+	    }
+	    
+	    @PostMapping("/generate-bill")
+		public String generateBill(
+				@RequestParam("customerName") String customerName,
+				@RequestParam("customerEmail") String customerEmail,
+				@RequestParam("customerPhone") String customerPhone,
+				@RequestParam("customerAddress") String customerAddress,
+				Model model) {
+			List cartDetails = caservice.getAllCartItemsWithDetails();
+			if (cartDetails.isEmpty()) {
+				model.addAttribute("message", "Cart is empty! Please add items to generate a bill.");
+				model.addAttribute("cartItems", cartDetails);
+				model.addAttribute("totalPrice", 0.0);
+				return "cart";
+			}
+
+			// Save orders for each cart item
+			for (int i = 0; i < cartDetails.size(); i++) {
+				CartDetail cartDetail = (CartDetail) cartDetails.get(i);
+				Order order = new Order();
+				order.setCakeId(cartDetail.getCakeId());
+				order.setCustomerName(customerName);
+				order.setCustomerEmail(customerEmail);
+				order.setCustomerPhone(customerPhone);
+				order.setCustomerAddress(customerAddress);
+				oservice.saveOrder(order);
+			}
+
+			// Calculate total price
+			double totalPrice = 0;
+			for (int i = 0; i < cartDetails.size(); i++) {
+				CartDetail cartDetail = (CartDetail) cartDetails.get(i);
+				totalPrice = totalPrice + (cartDetail.getCakePrice() * cartDetail.getQuantity());
+			}
+
+			// Generate PDF
+			byte[] pdfBytes = pservice.generateCartBillPdf(cartDetails, customerName, customerEmail, customerPhone, customerAddress);
+
+			// Send email
+			try {
+				eservice.sendBillEmail(customerEmail, pdfBytes);
+			} catch (Exception e) {
+				model.addAttribute("message", "Failed to send bill email!");
+				model.addAttribute("cartItems", cartDetails);
+				model.addAttribute("totalPrice", totalPrice);
+				return "cart";
+			}
+
+			// Clear cart after successful order
+			caservice.clearCart();
+
+			model.addAttribute("message", "Payment Done! Order placed and bill sent to email! Total: ₹" + totalPrice);
+			return "success";
+		}
+	   
  }
 

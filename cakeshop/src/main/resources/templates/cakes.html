@@ -140,7 +140,10 @@
                                     th:attr="data-cake-id=${cake.id}, data-cake-name=${cake.name}, data-cake-price=${cake.price}">
                                 Buy Now
                             </button>
-                            <a href="#" class="btn btn-success flex-fill">Add to Cart</a>
+                          <form action="/add-to-cart" method="post" class="ms-2">
+    <input type="hidden" name="cakeId" th:value="${cake.id}">
+    <button type="submit" class="btn btn-success">Add to Cart</button>
+</form>
                         </div>
                     </div>
                 </div>
