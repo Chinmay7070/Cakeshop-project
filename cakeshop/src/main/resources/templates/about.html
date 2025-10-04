@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Cake Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf8f5;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #d63384 !important;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #d63384 !important;
+        }
+        h1, h2 {
+            color: #6f42c1;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #d63384;
+            border-color: #d63384;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #b02a5b;
+            border-color: #b02a5b;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/Uploads/images/cake_background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .section {
+            padding: 50px 0;
+        }
+        .team-card {
+            transition: transform 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+        .team-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .contact-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .carousel-img {
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #f8f9fa !important;
+            border-top: 1px solid #dee2e6;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Fragment -->
+    <div th:insert="~{fragments/navbar :: navbar(activePage='about')}"></div>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1>About Cake Shop</h1>
+            <p class="lead">Indulge in the sweetness of life with our delicious cakes, crafted with love and passion.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Story</h2>
+            <p class="text-center mb-4">
+                Founded in 2025, Cake Shop began with a simple dream: to bring joy through delightful cakes. Our journey started in a small kitchen, where we experimented with flavors and designs to create unique, mouth-watering treats. Today, we are proud to serve our community with the finest cakes, made from the freshest ingredients and a whole lot of love.
+            </p>
+            <div id="storyCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/Uploads/images/stories/our_story1.jpg" class="d-block w-100 carousel-img" alt="Our Story - Baking">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/Uploads/images/stories/our_story2.jpg" class="d-block w-100 carousel-img" alt="Our Story - Shop">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/Uploads/images/stories/our_story3.jpg" class="d-block w-100 carousel-img" alt="Our Story - Community">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#storyCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#storyCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background-color: #fff;">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Mission</h2>
+            <p class="text-center">
+                At Cake Shop, our mission is to create moments of happiness. Whether it's a birthday, wedding, or a simple craving, we aim to deliver cakes that not only taste amazing but also bring smiles to faces. We are committed to quality, creativity, and customer satisfaction.
+            </p>
+            <div class="text-center mt-4">
+                <a href="/cakes" class="btn btn-primary">Explore Our Cakes</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="text-center mb-4">Meet Our Team</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="team-card text-center">
+                        <img src="/Uploads/images/member/team_member1.jpg" alt="Team Member" class="team-img mb-3">
+                        <h5>Chinmay Chaudhari</h5>
+                        <p>Head Baker</p>
+                        <p>Ravi's passion for baking transforms every cake into a work of art.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="team-card text-center">
+                        <img src="/Uploads/images/member/team_member2.jpg" alt="Team Member" class="team-img mb-3">
+                        <h5>Priya Desai</h5>
+                        <p>Creative Designer</p>
+                        <p>Priya brings creativity to life with her stunning cake designs.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="team-card text-center">
+                        <img src="/Uploads/images/member/team_member3.jpg" alt="Team Member" class="team-img mb-3">
+                        <h5>Gaurav Chavan</h5>
+                        <p>Customer Happiness Manager</p>
+                        <p>Anil ensures every customer leaves with a smile.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="background-color: #fff;">
+        <div class="container">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="contact-form">
+                        <form th:action="@{/submit-contact}" method="post">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3">
+        <p>&copy; 2025 Cake Shop. All Rights Reserved. Images from <a href="https://unsplash.com" target="_blank">Unsplash</a>.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

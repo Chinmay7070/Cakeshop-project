@@ -48,33 +48,8 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="/cakes">🍰 Cake Shop</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cakes">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/cart">🛒 Cart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin">Admin</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Navbar Fragment -->
+    <div th:insert="~{fragments/navbar :: navbar(activePage='cart')}"></div>
 
     <div class="container mt-5">
         <h1 class="text-center">Your Cart</h1>
@@ -92,7 +67,7 @@
             <tbody>
                 <tr th:each="item : ${cartItems}">
                     <td>
-                        <img th:src="${item.cakeImage_path != null ? item.cakeImage_path : '/uploads/images/default_cake.jpg'}" style="width: 100px; height: auto;" alt="Cake Image">
+                        <img th:src="${item.cakeImage_path != null ? item.cakeImage_path : '/Uploads/images/default_cake.jpg'}" style="width: 100px; height: auto;" alt="Cake Image">
                     </td>
                     <td th:text="${item.cakeName != null ? item.cakeName : 'Unknown Cake'}">Unknown Cake</td>
                     <td th:text="${item.cakePrice != null ? '₹' + item.cakePrice : '₹0.0'}">₹0.0</td>

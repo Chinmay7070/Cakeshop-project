@@ -40,12 +40,21 @@ public class CakeController {
 	@Autowired
 	private EmailService eservice;
 	
+	@GetMapping("/")
+	public String getHomePage() {
+		return "index";
+	}
+	
 	@GetMapping("/cakes")
 	public String getAllCakes(Model model) {
 		
 		List<Cake> cakes = cservice.getAllCakes();
 		model.addAttribute("cakes",cakes);
 		return "cakes";
+	}
+	@GetMapping("/about")
+	public String getAboutPage() {
+		return "about";
 	}
 	
 	@PostMapping("/buy")
